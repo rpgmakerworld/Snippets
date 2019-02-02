@@ -1,0 +1,7 @@
+($gameParty.members().reduce(function(total, member) { return total + member.level; }, 0) / $gameParty.members().length) 
+>
+($gameTroop.members().reduce(function(total, member) { return total + member.level; }, 0) / $gameTroop.members().length)
+
+That'll return true if the average level is greater than that of the enemy troop, and false otherwise.
+Though the enemy levels plugin has an averageLevel function anyway.
+$gameParty.averageLevelBattleMembers() > $gameTroop.averageLevel()
