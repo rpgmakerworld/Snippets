@@ -1,0 +1,13 @@
+var boss = $gameTroop.aliveMembers().filter(function(enemy) { return enemy.enemyId() === ID OF BOSS ENEMY; })[0];
+var mooks = $gameTroop.aliveMembers().filter(function(enemy) { return enemy.enemyId() !== ID OF BOSS ENEMY; });
+var mookParams = [0, 0, 0, 0, 0, 0, 0, 0];
+mooks.forEach(function(mook) {
+  for (var i = 0; i < mookParams.length; i++) {
+    mookParams[i] += mook.enemy().params[i];
+  }
+});
+boss.enemy().params = mookParams;
+boss._hp = mookParams[0];
+boss._mp = mookParams[1];
+
+Put that in a turn 0 battle event, and also a turn 1x battle event to make it keep recalculating each turn (to account for dead mooks)
