@@ -1,0 +1,20 @@
+<pre-damage eval>
+damage = Math.floor(value * 0.2);
+states = target._states.slice();
+var friends = target.friendsUnit().members().filter(function(member) {
+  return member !== target;
+});
+friends.forEach(function(friend) {
+  friend.gainHp(-damage);
+  friend.startDamagePopup();
+  friend.performDamage();
+  if (friend.isDead()) {
+    friend.performCollapse();
+  } else {
+    randomState = states[Math.randomInt(states.length)];
+    if (randomState && Math.randomInt(100) < 25) {
+      friend.addState(randomState);
+    }
+  }
+});
+</pre-damage eval>
