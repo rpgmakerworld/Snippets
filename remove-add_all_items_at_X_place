@@ -1,0 +1,18 @@
+Taking stuff away common event:
+$gameVariables.setValue(1, $gameParty.members().map(function(member) { return [member.actorId(), member.level]; }));
+$gameVariables.setValue(2, $gameParty._items);
+$gameVariables.setValue(3, $gameParty._weapons);
+$gameVariables.setValue(4, $gameParty._armors);
+$gameParty.members().forEach(function(member) {
+  member.changeLevel(1);
+});
+$gameParty._items = {};
+$gameParty._weapons = {};
+$gameParty._armors = {};
+
+
+Giving stuff back:
+$gameVariables.value(1).forEach(function(levelArr) { $gameActors.actor(levelArr[0]).changeLevel(levelArr[1]); });
+$gameParty._items = $gameVariables.value(2);
+$gameParty._weapons = $gameVariables.value(3);
+$gameParty._armors = $gameVariables.value(4);
