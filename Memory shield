@@ -1,0 +1,45 @@
+<Custom Apply Effect>
+user._memoryShield = user._memoryShield || [];
+user.setStateCounter(stateId, user._memoryShield.length);
+</Custom Apply Effect>
+
+<Custom Select Effect>
+if (this.isSkill() && !this.isAttack() && this.isForOpponent()) {
+  var skillId = this.item().id;
+  if (target._memoryShield.contains(skillId)) {
+    this._formerItemSuccessRateMS = this.item().successRate;
+    var rate = 0.25
+    this.item().successRate *= rate;
+  } else {
+    target._memoryShield.push(skillId);
+    var skill = $dataSkills[skillId];
+    var text = '<CENTER>\\c[4]\\i[' + skill.iconIndex + ']' + skill.name + '\\c[0] added to \\c[4]Memory Shield\\c[0]!';
+    var wait = 60;
+    BattleManager.addText(text, wait);
+    for (;;) {
+      if (target._memoryShield.length > 8) {
+        var skill = $dataSkills[target._memoryShield.shift()];
+        target.startAnimation(5);
+        text = '<CENTER>\\c[4]\\i[' + skill.iconIndex + ']' + skill.name + '\\c[0] is removed from \\c[4]Memory Shield\\c[0]!';
+        BattleManager.addText(text);
+      } else {
+        break;
+      }
+    }
+  target.setStateCounter(stateId, target._memoryShield.length);
+  }
+} else if (this.isAttack() && target._memoryShield.length > 0) {
+  var skill = $dataSkills[target._memoryShield.shift()];
+  text = '<CENTER>\\c[4]\\i[' + skill.iconIndex + ']' + skill.name + '\\c[0] is removed from \\c[4]Memory Shield\\c[0]!';
+  target.startAnimation(5);
+  target.setStateCounter(stateId, target._memoryShield.length);
+  var wait = 60;
+  BattleManager.addText(text, wait);
+}
+</Custom Select Effect>
+
+<Custom Deselect Effect>
+if (this._formerItemSuccessRate !== undefined) {
+  this.item().successRate = this._formerItemSuccessRateMS;
+}
+</Custom Deselect Effect>
