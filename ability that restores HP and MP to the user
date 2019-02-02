@@ -1,0 +1,36 @@
+Do you want an ability that restores HP and MP to the user based on the damage they do? 
+Do you want that amount to DOUBLE if it's a killing blow?! Look no further! 
+Just slap this bad boy into your skill and thank me later! :D
+
+<Post-Damage Eval>
+if (target.result().hpDamage > 0 && target.hp <= 0) {
+  // Calculate heal value and double it because you just killed a bad guy, yay!
+//This one calculates how much HP will be healed
+var healHP = Math.floor(target.result().hpDamage * 2);
+//This one calculates how much MP will be healed
+  var healMP = Math.floor(target.result().hpDamage * 0.150);
+//Plays an animation on the user
+user.startAnimation(42);
+//User restores HP based on above formula
+user.gainHp(healHP);
+//User restores MP based on above formula
+user.gainMp(healMP);
+  // Start a damage popup on the user
+  user.startDamagePopup();
+  // Clear the results
+  user.clearResult();
+}
+else
+{
+  // Calculate heal value
+  var healHP = Math.floor(target.result().hpDamage * 1);
+  var healMP = Math.floor(target.result().hpDamage * 0.075);
+user.startAnimation(46);
+user.gainHp(healHP);
+user.gainMp(healMP);
+  // Start a damage popup on the user
+  user.startDamagePopup();
+  // Clear the results
+  user.clearResult();
+}
+</Post-Damage Eval>
