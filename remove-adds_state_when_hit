@@ -1,0 +1,24 @@
+ In the state:
+ <custom apply effect>
+target.addStateCounter(5, 1);
+</custom apply effect>
+
+In the skill:
+<damage formula>
+stateA = number
+stateB = number
+stacksNeeded = number
+aStacks = target.getStateCounter(stateA)
+if (aStacks >= stacksNeeded) {
+  bStacks = Math.floor(aStacks / stacksNeeded)
+  target.addState(stateB);
+  target.addStateCounter(stateB, bStacks);
+  target.addStateCounter(stateA, -(stacksNeeded * bStacks));
+  aStacks = target.getStateCounter(stateA)
+  if (aStacks === 0) {
+    target.removeStateCounter(stateA);
+    target.removeState(stateA);
+  }
+}
+value = number
+</damage formula>
